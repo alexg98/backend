@@ -25,11 +25,11 @@ public class UserController {
 	@Autowired
 	protected UserService userService;
 	
+	@Autowired
 	protected ObjectMapper mapper;
 	
 	@RequestMapping(value ="/saveOrUpdate", method = RequestMethod.POST)
 	public RestResponse saveOrUpdate(@RequestBody String userJson) throws JsonParseException, JsonMappingException, IOException {
-		this.mapper = new ObjectMapper();
 		User user = this.mapper.readValue(userJson, User.class);	
 		if(!this.validate(user)) {
 			return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(),
@@ -46,7 +46,6 @@ public class UserController {
 	
 	@RequestMapping(value ="/deleteUser", method = RequestMethod.POST)
 	public void deleteUser(@RequestBody String userJson) throws Exception {
-		this.mapper = new ObjectMapper();
 		User user = this.mapper.readValue(userJson, User.class);
 		
 		if(user.getId() == null) {
